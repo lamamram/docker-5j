@@ -3,19 +3,22 @@
 [[ -z $(docker ps -aq) ]] \
 || docker rm -f $(docker ps -aq -f "name=app_*")
 
+docker volume rm db_data
+
 docker network rm stack_php
 
 docker network create stack_php --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1
 
-
+# volume nommé se trouve par défaut dans /var/lib/docker/volumes/db_data/_data/
+# --env MARIADB_USER=test \
+# --env MARIADB_PASSWORD=roottoor \
+# --env MARIADB_DATABASE=test \
+# --env MARIADB_ROOT_PASSWORD=roottoor \
 docker run \
 --name app_mariadb \
 -d --restart unless-stopped \
 --net stack_php \
---env MARIADB_USER=test \
---env MARIADB_PASSWORD=roottoor \
---env MARIADB_DATABASE=test \
---env MARIADB_ROOT_PASSWORD=roottoor \
+--env-file /vagrant/.env \
 -v db_data:/var/lib/mysql \
 mariadb:10.11.6
 
