@@ -41,3 +41,4 @@
 5. quand on crée un container, un **cgroup** fils ou **cgroup** main lié au service **containerd**
 6. ce cgroup est lié au pid host
 7. on peut voir ce pid avec `docker inspect ctn --format "{{ .State }}"`
+8. possibilité de désactiver le namespace pid avec docker run ... --pid=host (FAILLE BEANTE)
