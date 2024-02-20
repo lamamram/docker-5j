@@ -9,10 +9,24 @@ docker network create stack_php --driver=bridge --subnet=172.18.0.0/16 --gateway
 
 
 docker run \
+--name app_mariadb \
+-d --restart unless-stopped \
+--net stack_php \
+--env MARIADB_USER=test \
+--env MARIADB_PASSWORD=roottoor \
+--env MARIADB_DATABASE=test \
+--env MARIADB_ROOT_PASSWORD=roottoor \
+-v db_data:/var/lib/mysql \
+mariadb:10.11.6
+
+
+# --mount type=bind,src=/vagrant/index.php,dst=/srv/index.php,readonly\
+# volume-opt driver=local,volume-opt type=nfs,volume-opt device=182.168.x.y=/storage
+docker run \
 --name app_php \
 -d --restart unless-stopped \
 --net stack_php \
--v /vagrant/index.php:/srv/index.php \
+-v /vagrant/index.php:/srv/index.php:ro \
 bitnami/php-fpm:8.2-debian-11
 
 # docker cp /vagrant/index.php app_php:/srv/index.php

@@ -1,6 +1,6 @@
 <?php
 echo "<h1>Hello World from PHP8.2-FPM</h1>";
-echo 'Version PHP courante : ' . phpversion();
+echo 'HELLO: Version PHP courante : ' . phpversion();
 
 /* echo '<pre>';
 try{
