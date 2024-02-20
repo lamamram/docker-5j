@@ -2,9 +2,9 @@
 echo "<h1>Hello World from PHP8.2-FPM</h1>";
 echo 'HELLO: Version PHP courante : ' . phpversion();
 
-/* echo '<pre>';
+echo '<pre>';
 try{
-  $conn = new \PDO('mysql:host=????;dbname=???', '???', '?????');
+  $conn = new \PDO('mysql:host=app_mariadb;dbname=test', 'test', 'roottoor');
   $sth = $conn->prepare('SELECT * FROM pays');
   $sth->execute();
   $checks = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -16,5 +16,5 @@ try{
 catch(\Exception $e){
     print_r($e);
 }
-echo '</pre >'; */
+echo '</pre >';
 ?>
