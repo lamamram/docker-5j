@@ -12,16 +12,18 @@ docker run \
 --name app_php \
 -d --restart unless-stopped \
 --net stack_php \
+-v /vagrant/index.php:/srv/index.php \
 bitnami/php-fpm:8.2-debian-11
 
-docker cp /vagrant/index.php app_php:/srv/index.php
+# docker cp /vagrant/index.php app_php:/srv/index.php
 
 docker run \
 --name app_nginx \
 -d --restart unless-stopped \
 -p 8080:80 \
 --net stack_php \
+-v /vagrant/php8.2.conf:/etc/nginx/conf.d/php8.2.conf \
 nginx:1.25.4
 
-docker cp /vagrant/php8.2.conf app_nginx:/etc/nginx/conf.d/php8.2.conf
-docker restart app_nginx
+# docker cp /vagrant/php8.2.conf app_nginx:/etc/nginx/conf.d/php8.2.conf
+# docker restart app_nginx
