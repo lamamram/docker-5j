@@ -1,4 +1,5 @@
-﻿#!/bin/bash
+#!/bin/bash
+
 [[ -z $(docker ps -aq) ]] \
 || docker rm -f $(docker ps -aq -f "name=app_*")
 
