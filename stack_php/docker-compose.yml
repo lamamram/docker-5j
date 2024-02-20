@@ -1,0 +1,68 @@
+---
+version: '3.9'
+
+#  {
+#     "version":"3.9",
+#     "services":{
+#       "app_nginx": {
+#         "container_name": "app_nginx", 
+#         ..., 
+#         "ports": [
+#           "8080:80", ...
+#         ]
+#       }
+#     }
+#   }
+
+services:
+  # nom d'un service arbitraire
+  app_nginx:
+    container_name: app_nginx
+    image: nginx:1.25.4
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    networks:
+      - stack_php
+    volumes:
+      - /vagrant/php8.2.conf:/etc/nginx/conf.d/php8.2.conf
+    depends_on:
+      - app_php
+  
+  app_php:
+    container_name: app_php
+    restart: unless-stopped
+    networks:
+      - stack_php
+    volumes:
+      - /vagrant/index.php:/srv/index.php
+    image: bitnami/php-fpm:8.2-debian-11
+    depends_on:
+      - app_mariadb
+
+  app_mariadb:
+    container_name: app_mariadb
+    restart: unless-stopped
+    env_file:
+      - /vagrant/.env
+    networks:
+      - stack_php
+    volumes:
+      - db_data:/var/lib/mysql
+      - /vagrant/mariadb-init.sql:/docker-entrypoint-initdb.d/mariadb-init.sql
+    image: mariadb:10.11.6
+
+
+networks:
+  stack_php:
+    name: stack_app
+    driver: bridge
+    ipam:
+      # {"config": [{"subnet": ..., "gateway"}]}
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
+
+volumes:
+  db_data:
+    name: db_data
