@@ -31,3 +31,13 @@
 
 ## lancer un process bloquant en arrière plan (le docker run ne dépend plus du shell courant)
 * `docker run --name deb12 -d debian:12 sleep infinity`
+
+## Introspection sur le namespace PID
+
+1. le processus lancé par docker est quand même associé par le namespace host de la vm
+2. root peut supprimer ce processus mais les namespaces **mount** et **ipc** interdisent la communication inter processus entre l'extérieur et l'intérieur du ctn
+3. à l'intérieur du container: `docker exec -it ctn bash` et `ps aux` montre que le PID a l'id 1 dans le namespace du ctn et on ne voit plus tous les autres pids
+4. NB: pour sortir d'un ctn soit exit (termine le bash) ou **ctrl + p + q** (sans terminer)
+5. quand on crée un container, un **cgroup** fils ou **cgroup** main lié au service **containerd**
+6. ce cgroup est lié au pid host
+7. on peut voir ce pid avec `docker inspect ctn --format "{{ .State }}"`

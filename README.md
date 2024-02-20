@@ -2,7 +2,7 @@
  
 ## 1. cycle de vie des conteneurs docker
 
-* [voir ici](./parts/container.md)
+* [voir ici](./life_cycle.md)
 
 ## 2. communications ente conteneurs
 
