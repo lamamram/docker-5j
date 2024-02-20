@@ -29,7 +29,7 @@
 * `$ docker ps -q`: afficher uniquement les identifiants
 * `$ docker ps -f "name=..."`: afficher en filtrant par ex. sur le nom
 
-## lancer un process bloquant en arrière plan (le docker run ne dépend plus du shell courant)
+## lancer un processus bloquant en arrière plan (le docker run ne dépend plus du shell courant)
 * `docker run --name deb12 -d debian:12 sleep infinity`
 
 ## Introspection sur le namespace PID
@@ -42,3 +42,11 @@
 6. ce cgroup est lié au pid host
 7. on peut voir ce pid avec `docker inspect ctn --format "{{ .State }}"`
 8. possibilité de désactiver le namespace pid avec docker run ... --pid=host (FAILLE BEANTE)
+
+
+## voir les traces du processus en arrière plan (-d)
+
+1. si un ctn lancé de manière interactive (docker run ... -it)
+2. on peut se détacher et réattacher le processus avec ctrl + p + q est `docker attach` ctn 
+3. vs docker exec ... qui lui créer un nouveau processus
+4. au lieu d'essayer de scruter les logs du pocessus lancé nous même docker nous donne directement `docker logs ctn`
