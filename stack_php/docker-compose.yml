@@ -63,14 +63,19 @@ services:
       - stack
       - backup
   
+  # on peut l'utiliser en onshot avec docker compose run --rm backup (nom du service)
+  # on peut utiliser le compose run comme le docker run normal i.e avec une commande particulière
   backup:
     image: debian:12-slim
     container_name: backup
     volumes:
       - /vagrant/backup:/backup
+    # le container n'a pas de réseau
     network_mode: none
+    # raccrocher les volumes d'un ou d' autres services
     volumes_from:
       - app_mariadb
+    # commande au lancement du container
     command: tar -czvf /backup/backup.gz /var/lib/mysql
     depends_on:
       - app_mariadb

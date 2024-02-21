@@ -81,6 +81,14 @@ obj:
 * en cas de volumes nommés, le down ne les supprime pas (logique)
   - pour tout supprimer: `docker compose down -v`
 
+## scruter les logs du microservice facilement
+
+* `docker compose [--profile <profile>] logs [service_particulier]`
+
+## rappel sur la cli de compose
+
+*  docker compose **ps** **start** **stop** **restart** **rm** **run** **exec**
+
 ## templating dans docker compose
 
 1. remplacer le port 9000 dans la conf ngnix par ${PHP_PORT}
