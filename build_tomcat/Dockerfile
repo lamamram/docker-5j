@@ -8,15 +8,19 @@ LABEL created_at.date="2024-02-21"
 LABEL stack="stack-java"
 LABEL stack.version="1.0"
 
+## paramètres de build
+ARG TOMCAT_VERSION_MAJOR
+ARG TOMCAT_VERSION_FULL
+
 ## ajouter un dossier /opt/tomcat
 RUN mkdir /opt/tomcat
 
 ## injecter le fichier https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz dans ce dossier
-ADD https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz /opt/tomcat
+ADD https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION_FULL}/bin/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz /opt/tomcat
 
 ## décomprésser dans ce dossier sans dossier intermédiaire 
-RUN tar -xvzf /opt/tomcat/apache-tomcat-9.0.85.tar.gz -C /opt/tomcat --strip-components=1
-RUN rm -f /opt/tomcat/apache-tomcat-9.0.85.tar.gz
+RUN tar -xvzf /opt/tomcat/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz -C /opt/tomcat --strip-components=1
+RUN rm -f /opt/tomcat/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz
 ## installer java 
 RUN yum update -q
 RUN yum install java -y -q

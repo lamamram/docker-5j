@@ -7,13 +7,19 @@ LABEL created_at.date="2024-02-21"
 LABEL stack="stack-java"
 LABEL stack.version="1.0"
 
+# variable d'environnement qui peut être utilisée avec le conteneur => docker run
+# ENV APP_NAME=java_app.conf
+
+# variable de build => valeur injectable par docker build -t ... --build-arg <value>
+ARG APP_NAME=java_app.conf
+
 # modifier l'image avec des commandes lancées au moment du build de l'image
 RUN mkdir /usr/local/apache2/conf/sites
 
 # injection de fichiers / dossiers depuis l'host vers l'image
 COPY . /usr/local/apache2/conf/
 
-RUN mv /usr/local/apache2/conf/java_app.conf /usr/local/apache2/conf/sites/
+RUN mv /usr/local/apache2/conf/${APP_NAME} /usr/local/apache2/conf/sites/
 
 # déclaration des ports avec lesquels ont peut faire du publish-all (-P) du docker run
 EXPOSE 80
