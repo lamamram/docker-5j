@@ -58,7 +58,7 @@ networks:
     name: stack_app
     driver: bridge
     ipam:
-      # {"config": [{"subnet": ..., "gateway"}]}
+      # {"config": [{"subnet": ..., "gateway"}, ...]}
       config:
         - subnet: 172.18.0.0/16
           gateway: 172.18.0.1

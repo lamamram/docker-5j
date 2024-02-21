@@ -10,14 +10,14 @@ Vagrant.configure(2) do |config|
   # interface réseau à utiliser (Win: ipconfig /all, Unix: ip a )
   interface = "Intel(R) Ethernet Connection (7) I219-LM #2"
   # gamme d'ip à utiliser
-  range = "192.168.44.9"
+  range = "192.168.1.3"
   # masque de sous réseau
   cidr = "24"
 
   [
-    ["worker4.lan", "1024", "1", "ubuntu/focal64", "#{range}4"],
-    ["worker7.lan", "1024", "1", "ubuntu/focal64", "#{range}7"],
-    ["formation.lan", "2048", "2", "ubuntu/focal64", "#{range}3"],
+    ["worker4.lan", "1024", "1", "ubuntu/focal64", "#{range}1"],
+    ["worker7.lan", "1024", "1", "ubuntu/focal64", "#{range}2"],
+    ["formation.lan", "2048", "2", "ubuntu/focal64", "#{range}0"],
   ].each do |vmname,mem,cpu,os,ip|
     config.vm.define "#{vmname}" do |machine|
 

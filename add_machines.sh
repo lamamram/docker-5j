@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in 4 7; do
+for i in 1 2; do
 docker-machine create \
     --driver generic \
     --generic-ip-address "$1$i" \
