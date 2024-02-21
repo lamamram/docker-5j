@@ -28,6 +28,8 @@ services:
       - /vagrant/php8.2.conf:/etc/nginx/conf.d/php8.2.conf
     depends_on:
       - app_php
+    profiles:
+      - stack
   
   app_php:
     container_name: app_php
@@ -37,8 +39,14 @@ services:
     volumes:
       - /vagrant/index.php:/srv/index.php
     image: bitnami/php-fpm:8.2-debian-11
+    # on ne peut lancer le service qu'après le(s) service(s) renseigné(s)
     depends_on:
       - app_mariadb
+    # partitionnement de services dans la "liste" des services 
+    # - stack pour fabriquer le microservice
+    # - backup pour demander un export (one shot)
+    profiles:
+      - stack
 
   app_mariadb:
     container_name: app_mariadb
@@ -51,7 +59,23 @@ services:
       - db_data:/var/lib/mysql
       - /vagrant/mariadb-init.sql:/docker-entrypoint-initdb.d/mariadb-init.sql
     image: mariadb:10.11.6
-
+    profiles:
+      - stack
+      - backup
+  
+  backup:
+    image: debian:12-slim
+    container_name: backup
+    volumes:
+      - /vagrant/backup:/backup
+    network_mode: none
+    volumes_from:
+      - app_mariadb
+    command: tar -czvf /backup/backup.gz /var/lib/mysql
+    depends_on:
+      - app_mariadb
+    profiles:
+      - backup
 
 networks:
   stack_php:
@@ -62,6 +86,9 @@ networks:
       config:
         - subnet: 172.18.0.0/16
           gateway: 172.18.0.1
+
+      
+
 
 volumes:
   db_data:
