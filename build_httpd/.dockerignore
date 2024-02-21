@@ -1,0 +1,5 @@
+# interdire certains du contexte de build
+# i.e pour les COPY ou ADD globaux
+Dockerfile
+.dockerignore
+backup.gz

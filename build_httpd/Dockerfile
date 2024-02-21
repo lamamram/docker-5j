@@ -7,13 +7,13 @@ LABEL created_at.date="2024-02-21"
 LABEL stack="stack-java"
 LABEL stack.version="1.0"
 
-# injection de fichiers / dossiers depuis l'host vers l'image
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
-
 # modifier l'image avec des commandes lancées au moment du build de l'image
 RUN mkdir /usr/local/apache2/conf/sites
 
-COPY java_app.conf /usr/local/apache2/conf/sites/java_app.conf
+# injection de fichiers / dossiers depuis l'host vers l'image
+COPY . /usr/local/apache2/conf/
+
+RUN mv /usr/local/apache2/conf/java_app.conf /usr/local/apache2/conf/sites/
 
 # déclaration des ports avec lesquels ont peut faire du publish-all (-P) du docker run
 EXPOSE 80
