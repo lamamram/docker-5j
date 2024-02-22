@@ -16,21 +16,18 @@ ARG TOMCAT_VERSION_FULL
 RUN mkdir /opt/tomcat
 
 ## injecter le fichier https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz dans ce dossier
-## best practices du ADD: en local pour transférer on préférera curl / wget qui sont plus rapides et chaînables
-# ADD https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION_FULL}/bin/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz /opt/tomcat
+ADD https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION_FULL}/bin/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz /opt/tomcat
 
 ## décomprésser dans ce dossier sans dossier intermédiaire 
+RUN tar -xvzf /opt/tomcat/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz -C /opt/tomcat --strip-components=1
+RUN rm -f /opt/tomcat/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz
 ## installer java 
-## nettoyer les paquets yum
-## ajouter un utilisateur tomcat avec le dossier /opt/tomcat comme home  
-## optimisation des RUN pour ne créer qu'une seule couche => un seul état => + légéer en disque
-RUN curl https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION_FULL}/bin/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz \
-    | tar -xvz -C /opt/tomcat --strip-components=1 && \
-    rm -f /opt/tomcat/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz && \
-    yum update -q && \
-    yum install java -y -q && \
-    yum clean all && \
-    useradd -m -d /opt/tomcat -U tomcat
+RUN yum update -q
+RUN yum install java -y -q
+## nettoyer les paquets yum 
+RUN yum clean all
+## ajouter un utilisateur tomcat avec le dossier /opt/tomcat comme home 
+RUN useradd -m -d /opt/tomcat -U tomcat
 
 ## changer le home de l'image vers /opt/tomcat/tomcat/webapps
 ## WORKDIR subsitue le home d'un utilisateur même avant l'utilisation de la directive USER 
