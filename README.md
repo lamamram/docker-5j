@@ -10,31 +10,27 @@
 
 ## 3. persistence des données des conteneurs
 
-* [voir ici](./parts/volume.md)
+* [voir ici](./volumes.md)
 
 ## 4. construction d'images
 
-* [voir ici](./parts/build.md)
+* [voir ici](./build_image.md)
 
-## 5. atelier httpd & tomcat
+## 5. utilisation de docker compose
 
-* [voir ici](./parts/tomcat.md)
+* [voir ici](./compose.md)
 
-## 6. limitations des resources conteneurs
+## 6. registre d'images privé
 
-* [voir ici](./parts/limit.md)
+* [voir ici](./registry.md)
 
-## 7. utilisation de docker compose
+## 7. limitations des resources conteneurs
 
-* [voir ici](./parts/compose.md)
+* [voir ici](./cgroups.md)
 
-## 8. registre d'images privé
+## 8. création d"'un cluster (setup docker swarm)
 
-* [voir ici](./parts/registry.md)
-
-## 9. création d"'un cluster (setup docker swarm)
-
-* [voir ici](./parts/setup.md)
+* [voir ici](./swarm.md)
 
 ## 10. Docker Swarm
 

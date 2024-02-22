@@ -1,0 +1,37 @@
+---
+version: '3.9'
+
+services:
+  java_httpd:
+    image: java_httpd:1.0
+    # si on veut build depuis docker compose
+    build:
+      context: ../build_httpd
+    container_name: java-httpd
+    restart: unless-stopped
+    networks:
+      - stack_java
+    ports:
+      - 8081:80
+    # depends_on, profile, volumes-from, ... liés au nom de sercive != nom de container
+    depends_on:
+      - java_tomcat
+
+  java_tomcat:
+    image: java_tomcat:1.0
+    build:
+      context: ../build_tomcat
+      args: 
+        - TOMCAT_VERSION_MAJOR=${TOMCAT_VERSION_MAJOR:-9}
+        - TOMCAT_VERSION_FULL=${TOMCAT_VERSION_FULL:-9.0.85}
+    container_name: java-tomcat
+    restart: unless-stopped
+    networks:
+      - stack_java
+
+
+networks:
+  stack_java:
+    name: stack_java
+    driver: bridge
+  
