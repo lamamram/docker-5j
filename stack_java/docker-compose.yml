@@ -3,7 +3,8 @@ version: '3.9'
 
 services:
   java_httpd:
-    image: java_httpd:1.0
+    image: formation.lan:5000/java_httpd:1.0
+    # image: java_httpd:1.0
     # si on veut build depuis docker compose
     build:
       context: ../build_httpd
@@ -32,8 +33,14 @@ services:
       - stack_java
 
 
+
 networks:
   stack_java:
     name: stack_java
     driver: bridge
+  # registry:
+  #   # utilisation d'un réseau géré par un autre service
+  #   external: true
+  #   name: registry
+      
   
