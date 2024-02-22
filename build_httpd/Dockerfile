@@ -14,7 +14,13 @@ LABEL stack.version="1.0"
 ARG APP_NAME=java_app.conf
 
 # modifier l'image avec des commandes lancées au moment du build de l'image
-RUN mkdir /usr/local/apache2/conf/sites
+# ajouter curl pour le healthcheck et nettoyer un cache apt
+RUN mkdir /usr/local/apache2/conf/sites && \
+    apt-get update -qq && \
+    apt-get install -y curl && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # injection de fichiers / dossiers depuis l'host vers l'image
 COPY . /usr/local/apache2/conf/
@@ -25,18 +31,12 @@ RUN mv /usr/local/apache2/conf/${APP_NAME} /usr/local/apache2/conf/sites/
 EXPOSE 80
 EXPOSE 443
 
-# programme le lancement d'une commande au moment de la création du docker run
-# la CMD du HEALTHCHECK commence au bout de <start_period> 
-# avec une durée de <timeout>
-# si la CMD exit en 0 => le container est en bonne santé
-# sinon on en attend <interval>
-# et on boucle <retries> fois
-# HEALTHCHECK \
-#   --interval=5s \
-#   --timeout=30s \
-#   --start-period=5s \
-#   --retries=3 \
-#   CMD [ "executable" ]
+
+HEALTHCHECK \
+  --interval=3s \
+  --timeout=30s \
+  --start-period=3s \
+  CMD curl http://localhost:80
 
 # commande qui va être lancée par défaut au docker run de cette image
 # OU substituée par une option command: de docker compose ou le paramètre final du docker run

@@ -55,6 +55,12 @@ EXPOSE 8080
 ## CMD seule => la totalité de la commande est substituable
 CMD [ "/opt/tomcat/bin/catalina.sh", "run" ]
 
+# programme le lancement d'une commande au moment de la création du docker run
+# la CMD du HEALTHCHECK commence au bout de <start_period> 
+# avec une durée de <timeout>
+# si la CMD exit en 0 => le container est en bonne santé
+# sinon on en attend <interval>
+# et on boucle <retries> fois
 # WARNING le CMD ne fonctionne en mode tokens ["key", "word"]
 HEALTHCHECK \
   --interval=5s \
