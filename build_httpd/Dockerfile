@@ -2,6 +2,7 @@ FROM httpd:2.4
 
 # métadonnée pour décrire l'image et filtrer l'image
 # docker image ls --filter "label=stack=stack-java"
+# docker ps --filter "label=author=matt"
 LABEL author="matt"
 LABEL created_at.year="2024"
 LABEL created_at.date="2024-02-21"
