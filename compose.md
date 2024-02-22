@@ -98,7 +98,6 @@ obj:
    - remplacer le template par le fchier interpolé
 3. modifier le docker-compose.yml pour
   - injecter la variable d'environnement dans le conteneur de façon masquée
-  - trouver le moyen sur l'image nginx pour exécuter la commande envsubst avant de lancer le serveur (cf doc, github, ...)
 
 4. aller plus loin
   - modifier le port écouté sut le conteneur php => /opt/bitnami/php/etc/php-fpm.d/www.conf

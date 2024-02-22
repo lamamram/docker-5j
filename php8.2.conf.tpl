@@ -1,0 +1,19 @@
+# à placer dans /etc/nginx/conf.d/php8.2.conf
+# à interpoler avec une variable d'environnement PHP_PORT et envsubst < template > vrai vhost
+server {
+    index index.php index.html;
+    # ip de la vm
+    server_name formation.lan;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    root /usr/share/nginx/html;
+
+    location ~ \.php$ {
+        # ip du conteneur php
+        fastcgi_pass    app_php:${PHP_PORT};
+        fastcgi_index   index.php;
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    /srv$fastcgi_script_name;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+}
