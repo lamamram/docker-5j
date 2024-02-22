@@ -30,6 +30,7 @@ services:
       - app_php
     profiles:
       - stack
+    # healthcheck: "commande de test"
   
   app_php:
     container_name: app_php
