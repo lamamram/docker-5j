@@ -18,3 +18,24 @@
    `docker push <new_reference>`
 
 3. utiliser l'image depuis `docker pull`
+
+## utilisation du TLS
+
+* warining pour auto signé 
+1. modifier ou créer le fichier `/etc/docker/daemon.json`
+
+```
+{
+   "insecure-registries": ["formation.lan:5000"]
+}
+```
+
+ajouter le certicat côté client (autorité de certification locale)
+```
+cd /vagrant/registry
+sudo mkdir -p /etc/docker/certs.d/formation.lan:443
+sudo cp  certs/registry.crt /etc/docker/certs.d/formation.lan:443/ca.crt
+```
+
+refabriquer un htpasswd utiliser un container httpd => 
+`htpasswd -Bbn testuser password > htpasswd`
