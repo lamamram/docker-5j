@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   java_httpd:
-    image: formation.lan:5000/java_httpd:1.0
+    image: formation.lan:443/java_httpd:1.0
     # image: java_httpd:1.0
     # si on veut build depuis docker compose
     build:
