@@ -54,3 +54,11 @@ EXPOSE 8080
 # CMD [ "run" ]
 ## CMD seule => la totalité de la commande est substituable
 CMD [ "/opt/tomcat/bin/catalina.sh", "run" ]
+
+# WARNING le CMD ne fonctionne en mode tokens ["key", "word"]
+HEALTHCHECK \
+  --interval=5s \
+  --timeout=30s \
+  --start-period=5s \
+  --retries=3 \
+  CMD grep "Server startup" /opt/tomcat/logs/catalina.*.log

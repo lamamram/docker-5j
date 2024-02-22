@@ -25,6 +25,19 @@ RUN mv /usr/local/apache2/conf/${APP_NAME} /usr/local/apache2/conf/sites/
 EXPOSE 80
 EXPOSE 443
 
+# programme le lancement d'une commande au moment de la création du docker run
+# la CMD du HEALTHCHECK commence au bout de <start_period> 
+# avec une durée de <timeout>
+# si la CMD exit en 0 => le container est en bonne santé
+# sinon on en attend <interval>
+# et on boucle <retries> fois
+# HEALTHCHECK \
+#   --interval=5s \
+#   --timeout=30s \
+#   --start-period=5s \
+#   --retries=3 \
+#   CMD [ "executable" ]
+
 # commande qui va être lancée par défaut au docker run de cette image
 # OU substituée par une option command: de docker compose ou le paramètre final du docker run
 CMD [ "httpd", "-D", "FOREGROUND" ]

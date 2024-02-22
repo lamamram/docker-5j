@@ -20,6 +20,8 @@ services:
   java_tomcat:
     image: java_tomcat:1.0
     build:
+      # true pour retravailler le docker totalement
+      no_cache: false
       context: ../build_tomcat
       args: 
         - TOMCAT_VERSION_MAJOR=${TOMCAT_VERSION_MAJOR:-9}
