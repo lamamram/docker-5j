@@ -1,4 +1,5 @@
 #!/bin/bash
+chmod 400 /home/vagrant/.ssh/insecure_private_key
 
 for i in 1 2; do
 docker-machine create \
