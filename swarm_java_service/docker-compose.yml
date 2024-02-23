@@ -1,0 +1,46 @@
+---
+version: '3.9'
+
+services:
+  httpd:
+    image: formation.lan:5000/java_httpd:1.0    
+    # warning pas de build dans SWARM
+    ports:
+      - 8081:80
+    networks:
+      registry:
+        aliases:
+          - java-httpd
+    depends_on:
+      - tomcat
+    # donner un tag à une clé
+    deploy: &deploy
+      endpoint_mode: vip
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 2
+      # gestion des rolling update
+      update_config:
+        parallelism: 2
+  
+  tomcat:
+    image: formation.lan:5000/java_tomcat:1.0
+    networks:
+      registry:
+        aliases:
+          - java-tomcat
+    # alias * yaml qui va dupliquer la valeur de la clé taggée 
+    deploy: *deploy
+    # anchor: héritage et modifications & ajouts
+    # deploy:
+    #   <<: *deploy
+    #   replicas: 3
+  
+
+networks:
+  registry:
+    external: true
+  

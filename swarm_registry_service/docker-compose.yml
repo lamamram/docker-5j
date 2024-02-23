@@ -4,21 +4,21 @@ version: '3'
 services:
   registry:
     image: registry:2    
-    environment:
-      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/registry.crt
-      REGISTRY_HTTP_TLS_KEY: /certs/registry.key
-      REGISTRY_HTTP_ADDR: 0.0.0.0:443
-      REGISTRY_AUTH: htpasswd
-      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
-      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    # environment:
+    #   REGISTRY_HTTP_TLS_CERTIFICATE: /certs/registry.crt
+    #   REGISTRY_HTTP_TLS_KEY: /certs/registry.key
+    #   REGISTRY_HTTP_ADDR: 0.0.0.0:443
+    #   REGISTRY_AUTH: htpasswd
+    #   REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+    #   REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
     ports:
       - 5000:5000
-      - 443:443
+    #  - 443:443
     networks:
       - registry
-    volumes:
-      - /vagrant/registry/certs:/certs:ro
-      - /vagrant/registry/auth:/auth
+    # volumes:
+    #   - /vagrant/registry/certs:/certs:ro
+    #   - /vagrant/registry/auth:/auth
     deploy:
       # balance loading interne dans les noeud (Virtual IP)
       # autre possibilité avec un loading balancer extérieur (HAproxy) (dnsrr => dns Round Robin)
