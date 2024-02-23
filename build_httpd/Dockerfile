@@ -1,3 +1,9 @@
+# multistaging build
+FROM curlimages/curl AS provider
+
+# REMARQUE: on peut compiler un projet dans une image et copier avec COPY --from xxx.exe .
+# dance cas on peut envelopper ce exécutable par une image FROM scratch (LHS hierarchie) => ./xxx.exe 
+
 FROM httpd:2.4
 
 # métadonnée pour décrire l'image et filtrer l'image
@@ -17,15 +23,19 @@ ARG APP_NAME=java_app.conf
 
 # modifier l'image avec des commandes lancées au moment du build de l'image
 # ajouter curl pour le healthcheck et nettoyer un cache apt
-RUN mkdir /usr/local/apache2/conf/sites && \
-    apt-get update -qq && \
-    apt-get install -y curl && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
+# RUN mkdir /usr/local/apache2/conf/sites && \
+#     apt-get update -qq && \
+#     apt-get install -y curl && \
+#     apt-get clean autoclean && \
+#     apt-get autoremove --yes && \
+#     rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+RUN mkdir /usr/local/apache2/conf/sites
 
 # injection de fichiers / dossiers depuis l'host vers l'image
 COPY . /usr/local/apache2/conf/
+# copier un utilitaire sur l'image qui nous intéresse
+COPY --chown=root:root --from=provider /usr/bin/curl /usr/bin/curl
 
 RUN mv /usr/local/apache2/conf/${APP_NAME} /usr/local/apache2/conf/sites/
 

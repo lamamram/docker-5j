@@ -9,6 +9,7 @@ services:
       - 8081:80
     networks:
       registry:
+        # fixer des alias réseaux car les noms de container sont dynamiques
         aliases:
           - java-httpd
     depends_on:
