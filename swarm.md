@@ -52,7 +52,16 @@ docker service create \
 * suppression du service: `docker service rm [service_name]`
 * attention: on ne stoppe ni démarre un sevrvice !!!
 
-## mise à jour d'un service : rolling update
+### placement des tâches d'un service
+
+1. utilisation de contraintes: `docker service ... --constraint node.role!=manager` pour préserver le manager
+par ex.
+2. contraintes custom utilisant les labels sur les nodes:
+  * `docker node update --label-(add|rm) <label>=<value> <node_name>`
+  * `docker service create ... --constraint node.labels.<label_name>(==|!=)<value> ...` 
+3. équilibrage selon des labels: => disposition la plus équilibrée selon les valeurs de certains labels
+  * `docker service create ... --placement-pref spread=node.labels....`
+### mise à jour d'un service : rolling update
 
 * mise à jour de tous les aspects d'un service
   - image des conteneurs: `--image [new_image]`
@@ -86,7 +95,7 @@ docker service create \
   - ex: modifier le nb de tâches mises à jour par phase
   `docker service update --update-delay --update-parallelism [service_name]`
 
-## rollback
+### rollback
   - silplifié puisque on ne peut pas reset vers un état hors l'état précédent
   - le rollback ne va pas impacter le options liés au mode d'update (paralélisme etc.)
 
