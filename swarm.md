@@ -47,6 +47,7 @@ docker service create \
 * liste des services du cluster: `docker service ls`
 * inspection d'un service: `docker service inspect --pretty [service_name]`
 * détail des conteneurs d'un service (task): `docker service ps [service_name]`
+* utiliser également `docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer` pour visualiser graphiqument
 * les logs du service: `docker service logs [service_name]`
 * suppression du service: `docker service rm [service_name]`
 * attention: on ne stoppe ni démarre un sevrvice !!!
@@ -75,13 +76,19 @@ docker service create \
 
   - mise à jour de l'image : `docker service update --image [new_image] [service]`
   - le service garde l'historique des conteneur de la version précédente en cas de rollback
-  - fixer la profondeur de l'historique défaut 5: `docker service update --task-history-limit n`
+  - visualiser l'historique d'un noeud : `docker node ps`
+  - visualiser l'historique de toutes les tâches : `docker service ps`
+  - fixer la profondeur de l'historique défaut 5: `docker swarm update --task-history-limit n`
 
   * mises à jour secondaires
 
   - ex: modifier le délais entre 2 phases d'une update
   - ex: modifier le nb de tâches mises à jour par phase
   `docker service update --update-delay --update-parallelism [service_name]`
+
+## rollback
+  - silplifié puisque on ne peut pas reset vers un état hors l'état précédent
+  - le rollback ne va pas impacter le options liés au mode d'update (paralélisme etc.)
 
 ## configuration réseau mesh
 
