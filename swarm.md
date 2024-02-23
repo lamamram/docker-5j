@@ -69,7 +69,7 @@ par ex.
   - config réseaux des conteneurs `--network-add, --network-rm ...`
   - volumes
   - ressources dispo ...
-  - repliques : `docker service scale`
+  - repliques : `docker service scale <service_name>=<replica_nb>`
 
 * montée en versions
   - préalable: établir un timeout entre 2 mises à jours de conteneurs pour un même service
@@ -101,9 +101,15 @@ par ex.
 
 ## configuration réseau mesh
 
+* la communication utilise un réseau nommé **ingress** de type **overlay**
+* ce driver fonctionne en utilisant la technologie **VXLAN** pour transiter les trames 2, 3 virtuelles dans une trame 4 tcp ou udp du réseau de noeuds => tunneling comme VLAN
+* le réseau overlay est installé d'abord sur le manager et installé sur les workers lors une tâche est installée dessus
+* un service ne spécifie pas de réseau utilise le réseau **ingress**
+* le réseau docker_gwbridge connecte les dockers daemon des noeuds pour les rollings rollback create ...
+
 * l'option `--publish published=8080,target=80` pilote l'utilisation du réseau 'mesh' ou réseau maillé de docker swarm par défaut
 * quelque soit le noeud public sur lequel on demande le port publié, on aura accès au service
-* cette disponibilité est assurée par des agents d'équilibrage de charge "load balancer" installé sur tous les noeuds
+* cette disponibilité est assurée par des agents d'équilibrage de charge "load balancer" installé sur tous les noeuds => réseau maiilé => mesh network
 
 ## relier les conteneur à travers les noeuds (overlay network)
 
