@@ -6,5 +6,5 @@ docker-machine create \
     --generic-ip-address "$1$i" \
     --generic-ssh-user vagrant \
     --generic-ssh-key /home/vagrant/.ssh/insecure_private_key \
-    "worker$i"
+    "worker$i" || echo "continue !!"
 done
