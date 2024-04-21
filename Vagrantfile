@@ -35,21 +35,9 @@ Vagrant.configure(2) do |config|
         ip: "#{ip}",
         netmask: "#{cidr}"
       machine.ssh.insert_key = false
-      if vmname == "formation.lan"
-        # copie la clé privée pour docker-machine / swarm
-        [
-            ["./insecure_private_key", "/home/vagrant/.ssh/insecure_private_key"]
-        ].each do |src,dest|
-          config.vm.provision "file", 
-            source: "#{src}", destination: "#{dest}"
-        end
-        # lancer l'install de docker dès le lancement
-        machine.vm.provision "shell", 
-          path: "install_docker.sh"
-        machine.vm.provision "shell", 
-          path: "add_machines.sh",
-          args: ["#{range}"]
-      end
+      # lancer l'install de docker dès le lancement
+      machine.vm.provision "shell", 
+        path: "install_docker.sh"
     end
   end
 end

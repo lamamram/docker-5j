@@ -6,6 +6,12 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+which docker
+ret=$?
+if [ $ret -eq 0 ]; then
+  exit 0
+fi
+
 # génération du cachec apt
 apt-get update -q
 
@@ -39,13 +45,4 @@ apt-get install -yq \
 # autorisé à exécuter des commandes docker sans sudo
 usermod -aG docker vagrant
 
-
-base=https://github.com/docker/machine/releases/download/v0.14.0 && \
-  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && \
-  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
-
-base=https://raw.githubusercontent.com/docker/machine/v0.14.0
-for i in docker-machine-prompt.bash docker-machine-wrapper.bash docker-machine.bash; do
-  sudo wget "$base/contrib/completion/bash/${i}" -P /etc/bash_completion.d
-done
 
