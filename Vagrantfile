@@ -8,11 +8,11 @@
 # access-token: myusine xYph6TpAt1yJ1hJiS3QN
 Vagrant.configure(2) do |config|
   # interface réseau à utiliser (ipconfig /all)
-  int= "nom de l'interface réseau connectée au routeur (ip a || ipconfig /all)"
+  interface = "Intel(R) Wireless-AC 9260 160MHz"
   # gamme d'ip à utiliser
-  range = "adresse ip disponible sur le sous réseau local (ping pour tester)"
+  range = "192.168.1.3"
   # masque de sous réseau
-  cidr = "24 (si masque réseau en 255.255.255.0)"
+  cidr = "24"
 
   [
     ["worker1.lan", "1024", "1", "ubuntu/focal64", "#{range}1"],
