@@ -21,7 +21,7 @@ docker run \
        bitnami/php-fpm:8.2-debian-12
 docker cp index.php stack_php_php:/srv/index.php
 
-# --link stack_php_php \
+# --link stack_php_php \ inutile pour un réseau custom
 docker run \
        --name stack_php_nginx \
        -d --restart unless-stopped \
