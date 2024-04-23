@@ -46,6 +46,7 @@ docker run \
        --net stack_php \
        --env-file .env \
        -v ./mariadb-init.sql:/docker-entrypoint-initdb.d/mariadb-init.sql:ro \
+       -v db_data:/var/lib/mysql \
        mariadb:11.0.4-jammy
        ## les variables d'env sont éditées puisqu'elles existent déjà dans le contenur
 

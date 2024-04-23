@@ -12,3 +12,13 @@
    => FAILLE par INJECTIONS de scripts !!!
 
 ## volume bind vs volume nommé
+
+1. volume bind: point de montage sur un ou plusieurs conteneurs, depuis la vm
+   * rendre le montage read-only avec :ro
+
+2. volume nommé: allocation d'un emplacement
+   * par défaut dans l'emplacement de /var/lib/docker/volumes
+   * pour faire sortir les données dans le host pour persister les donées
+
+3. il est possible qu'un mount bind modifie les données travers un script (par ex. entrypoint)
+   => mais que le volume nommé écrase ces modifications
