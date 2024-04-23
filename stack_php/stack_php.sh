@@ -18,8 +18,10 @@ docker run \
        --name stack_php_php \
        -d --restart unless-stopped \
        --net stack_php \
+       --env-file .env \
        -v ./index.php:/srv/index.php:ro \
        bitnami/php-fpm:8.2-debian-12
+       ## les variables d'env de mariadb sont chargées et crées dans le conteneur
 # docker cp index.php stack_php_php:/srv/index.php
 
 # --link stack_php_php \ inutile pour un réseau custom
@@ -45,6 +47,7 @@ docker run \
        --env-file .env \
        -v ./mariadb-init.sql:/docker-entrypoint-initdb.d/mariadb-init.sql:ro \
        mariadb:11.0.4-jammy
+       ## les variables d'env sont éditées puisqu'elles existent déjà dans le contenur
 
 # manière artisanale
 # -v ./mariadb-init.sql:/mariadb-init.sql:ro \
