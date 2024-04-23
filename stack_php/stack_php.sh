@@ -9,6 +9,13 @@ if [ $? -eq 0 ]; then
     docker network rm stack_php
 fi
 
+docker volume create \
+       --driver local \
+       --opt type=nfs \
+       --opt o=addr=192.168.1.30,ro \
+       --opt device=/mnt/nfs-dir \
+       nfs-vol
+
 docker network create \
        --subnet=172.18.0.0/24 \
        --gateway=172.18.0.1 \
@@ -19,8 +26,9 @@ docker run \
        -d --restart unless-stopped \
        --net stack_php \
        --env-file .env \
-       -v ./index.php:/srv/index.php:ro \
+       -v nfs-vol:/srv \
        bitnami/php-fpm:8.2-debian-12
+       # -v ./index.php:/srv/index.php:ro \
        ## les variables d'env de mariadb sont chargées et crées dans le conteneur
 # docker cp index.php stack_php_php:/srv/index.php
 
