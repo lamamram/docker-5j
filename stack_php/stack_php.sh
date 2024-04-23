@@ -18,16 +18,34 @@ docker run \
        --name stack_php_php \
        -d --restart unless-stopped \
        --net stack_php \
+       -v ./index.php:/srv/index.php:ro \
        bitnami/php-fpm:8.2-debian-12
-docker cp index.php stack_php_php:/srv/index.php
+# docker cp index.php stack_php_php:/srv/index.php
 
 # --link stack_php_php \ inutile pour un réseau custom
 docker run \
        --name stack_php_nginx \
        -d --restart unless-stopped \
        -p 192.168.1.30:8080:80 \
+       -v ./php8.2.conf:/etc/nginx/conf.d/php8.2.conf:ro \
        --net stack_php \
        nginx:1.25
 
-docker cp php8.2.conf stack_php_nginx:/etc/nginx/conf.d/php8.2.conf
-docker restart stack_php_nginx
+# docker cp php8.2.conf stack_php_nginx:/etc/nginx/conf.d/php8.2.conf
+# docker restart stack_php_nginx
+# -e MARIADB_USER=test \
+# -e MARIADB_PASSWORD=roottoor \
+# -e MARIADB_DATABASE=test \
+# -e MARIADB_ROOT_PASSWORD=roottoor \
+
+docker run \
+       --name stack_php_mariadb \
+       -d --restart unless-stopped \
+       --net stack_php \
+       --env-file .env \
+       -v ./mariadb-init.sql:/docker-entrypoint-initdb.d/mariadb-init.sql:ro \
+       mariadb:11.0.4-jammy
+
+# manière artisanale
+# -v ./mariadb-init.sql:/mariadb-init.sql:ro \
+# docker exec stack_php_mariadb bash -c 'mariadb -h localhost -u test -proottoor test < /mariadb-init.sql' 

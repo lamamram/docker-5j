@@ -21,6 +21,4 @@ un namespace net lié à une pile réseau virtuelle est créé
 
 ## communication entre conteneur
 
-1. utilisation de fichiers de connexions
-   * injecte les fichiers avec `docker cp path ctn:path`
-   => le fichier copié est un autre **inode**
+
