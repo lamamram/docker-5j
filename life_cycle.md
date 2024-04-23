@@ -5,7 +5,7 @@
 
 # docker run: REMARQUES
 
-* le processus lancé es t indenpendant du PID du process du terminal (shell) qui a mancé le docker run => çà l'effet du namespace PID
+* le processus lancé est indenpendant du PID du process du terminal (shell) qui a mancé le docker run => çà l'effet du namespace PID
 * la redirection de sortie du docker run bloque le shell si le processus est un démon
 
 * si l'image en paramètre du docker run n'est pas déjà sur l'instance du serveur docker,
@@ -20,6 +20,7 @@
 ## effet du namespace --pid
 
 1. `docker run --name test_ubu -it --rm ubuntu:20.04`
+   * voir les namespace enfants: `sudo ls -al /proc/$$/ns`
 2. `ps -ef | grep bash`: => PID 1 dans le conteneur
 3. `ctrl + p + q`: "sortir" du conteneur sans arrêter le process comme avec `exit`
 4. `ps -ef | grep bash` : => PID xxxx dans le host
@@ -27,7 +28,7 @@
 
 * REMARQUE avec VSCODE le raccourci ctrl + P + Q est interpolé par des raccourcis vscode
 * on peut gérer çà avec les settings utilisateur avec 
-  1. ctrl + P (palette)
+  1. ctrl + Shift + P (palette)
   2. renseigner settings et cliquer sur "paramètres utilisateur (JSON)"
   3. ajouter dans l'objet JSON
   ```json
