@@ -69,10 +69,10 @@ docker run \
        --name stack_php_nginx \
        -d --restart unless-stopped \
        -p 192.168.1.30:8080:80 \
-       
+       -v ./php8.2.conf:/etc/nginx/conf.d/php8.2.conf:ro \
        --net stack_php \
        nginx:1.25
-# -v ./php8.2.conf:/etc/nginx/conf.d/php8.2.conf:ro \
+
 # docker cp php8.2.conf stack_php_nginx:/etc/nginx/conf.d/php8.2.conf
 # docker restart stack_php_nginx
 
