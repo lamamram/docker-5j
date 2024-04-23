@@ -17,3 +17,10 @@ un namespace net lié à une pile réseau virtuelle est créé
 => on la voit a priori dans le docker run
 => ne sert qu'à l'option **-P | --publish-all** du docker run
 => pour publier les ports exposés sur des ports du host > 32768s
+
+
+## communication entre conteneur
+
+1. utilisation de fichiers de connexions
+   * injecte les fichiers avec `docker cp path ctn:path`
+   => le fichier copié est un autre **inode**
