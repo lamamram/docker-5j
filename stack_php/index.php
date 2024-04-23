@@ -20,5 +20,5 @@ catch(\Exception $e){
     print_r($e);
 }
 echo '</pre>';
-phpinfo();
+echo $_ENV;
 ?>

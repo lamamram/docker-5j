@@ -10,3 +10,5 @@
    => il faut sécuriser ces points de montage pour éviter d'éditer
    => un fichier qui est dispo également dans le host 
    => FAILLE par INJECTIONS de scripts !!!
+
+## volume bind vs volume nommé
