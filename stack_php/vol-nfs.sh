@@ -7,9 +7,10 @@
 
 # # conf nfs "vanilla"
 # sudo chown -R nobody:nogroup /mnt/nfs-dir
-# sudo chmod 777 /mnt/nfs-dir
+# sudo chmod 755 /mnt/nfs-dir
+# sudo chmod 644 /mnt/nfs-dir/*
 # # configuration server nfs
-# echo "/mnt/nfs-dir *(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports
+# echo "/mnt/nfs-dir *(rw,sync,no_subtree_check,no_all_squash)" | sudo tee -a /etc/exports
 # sudo exportfs -a
 # sudo systemctl restart nfs-kernel-server
 
@@ -17,7 +18,7 @@ docker volume create \
        --driver local \
        --opt type=nfs \
        --opt o=addr=192.168.1.30,ro \
-       --opt device=/mnt/nfs-dir \
+       --opt device=:/mnt/nfs-dir \
        nfs-vol
 
 
