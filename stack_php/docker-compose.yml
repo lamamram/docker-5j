@@ -1,0 +1,58 @@
+---
+# un document yaml (yet another markup language)
+
+# key: value
+# another key: another value
+# number: 33
+# float: 3.14
+# flag: true
+# void: null
+
+
+# object:
+#   param1: value
+#   param2: 
+#     - value2
+# # ==> {"object": {"param1": "value", "param2": ["value2"]}}
+# liste:
+#   - elem1
+#   - elem2
+#   - k: 1
+#     k2: "v2"
+
+# ==> {"liste": ["elem1", "elem2", {"k", 1, "k2", "v2"}]}
+# ---
+# un autre document yaml
+
+# version: "3"
+
+# l'édition des "services" qui constituent le microservice
+services:
+  nginx:
+    container_name: stack-php-nginx
+    image: nginx:1.25
+    restart: unless-stopped
+    ports:
+      - "192.168.1.30:8080:80"
+    volumes:
+      - ./php8.2.conf:/etc/nginx/conf.d/php8.2.conf:ro
+    networks:
+      - stack_php
+
+    
+  # php:
+  # mariadb:
+
+volumes:
+  db_data:
+
+networks:
+  stack_php:
+    name: stack_php
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
+  
+  
