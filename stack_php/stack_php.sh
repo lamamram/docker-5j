@@ -35,7 +35,7 @@ docker network create \
 ############################ CONTAINERS ###################################
 
 docker run \
-       --name stack_php_mariadb \
+       --name stack-php-mariadb \
        -d --restart unless-stopped \
        --net stack_php \
        --env-file .env \
@@ -54,7 +54,7 @@ docker run \
 
 
 docker run \
-       --name stack_php_php \
+       --name stack-php-php \
        -d --restart unless-stopped \
        --net stack_php \
        --env-file .env \
@@ -66,7 +66,7 @@ docker run \
 # docker cp index.php stack_php_php:/srv/index.php
 # --link stack_php_php \ inutile pour un réseau custom
 docker run \
-       --name stack_php_nginx \
+       --name stack-php-nginx \
        -d --restart unless-stopped \
        -p 192.168.1.30:8080:80 \
        -v ./php8.2.conf:/etc/nginx/conf.d/php8.2.conf:ro \

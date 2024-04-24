@@ -6,7 +6,7 @@ echo '<pre>';
 try{
 
   # $conn = new \PDO('mysql:host=stack_php_mariadb;dbname='.getenv('MARIADB_DATABASE'), getenv('MARIADB_USER'), getenv('MARIADB_PASSWORD'));
-  $conn = new \PDO('mysql:host=stack_php_mariadb;dbname=test', "test", "roottoor");
+  $conn = new \PDO('mysql:host=stack-php-mariadb;dbname=test', "test", "roottoor");
   
   $sth = $conn->prepare('SELECT * FROM pays');
   $sth->execute();
