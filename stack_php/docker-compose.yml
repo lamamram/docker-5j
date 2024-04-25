@@ -58,6 +58,12 @@ services:
       - mariadb
     profiles:
       - run
+    healthcheck:
+      test: php -r 'echo "hello";'
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
   
   mariadb:
     container_name: stack-php-mariadb

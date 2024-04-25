@@ -1,0 +1,49 @@
+---
+
+services:
+  tomcat:
+    container_name: stack-java-tomcat
+    image: stack-java-tomcat:1.0
+    build:
+      # pas de cache pour vérifier que le Dockerfile est intègre
+      # no_cache: true
+      context: ./tomcat
+      dockerfile: Dockerfile
+      args:
+        - TOMCAT_VERSION_MAJOR=${TOMCAT_VERSION_MAJOR:-9}
+        - TOMCAT_VERSION_FULL=${TOMCAT_VERSION_FULL:-9.0.88}
+    networks:
+      - stack_java
+    restart: unless-stopped
+    labels:
+      - author.username=mlamamra
+      - author.email=mlamamra@dawan.fr
+
+  
+  httpd:
+    container_name: stack-java-httpd
+    image: stack-java-httpd:2.4
+    build:
+      # no_cache: true
+      context: ./httpd
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - stack_java
+    ports:
+      - 8081:80
+    depends_on:
+      - tomcat
+    labels:
+      - author.username=mlamamra
+      - author.email=mlamamra@dawan.fr
+
+
+networks:
+  stack_java:
+    name: stack_java
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
+          gateway: 172.19.0.1
