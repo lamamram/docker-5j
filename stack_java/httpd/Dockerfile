@@ -21,6 +21,7 @@ ENV HOME /usr/local/apache2
 ENV TRUC toto
 
 # utilisation de l'image "curl" je transfers un contenu de l'image auxiliaire vers l'image principale
+# plus propre que apt-get update && install && autoremoce && autoclean && rm -rf ....
 COPY --from=curl /usr/local/bin/curl /usr/local/bin/curl
 
 COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
