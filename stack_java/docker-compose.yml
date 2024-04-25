@@ -37,6 +37,9 @@ services:
     labels:
       - author.username=mlamamra
       - author.email=mlamamra@dawan.fr
+    cap_drop:
+      - CAP_CHOWN
+    
 
 
 networks:
