@@ -11,6 +11,10 @@ LABEL created_at.year="2024"
 LABEL stack="java"
 LABEL stack.item="httpd"
 
+# variables d'environnement: utilisables au moment du docker run --env ...
+ENV HOME /usr/local/apache2 
+ENV TRUC toto
+
 COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 
 RUN mkdir -p /usr/local/apache2/conf/sites

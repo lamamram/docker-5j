@@ -8,6 +8,9 @@ LABEL created_at.year="2024"
 LABEL stack="java"
 LABEL stack.item="tomcat"
 
+ARG TOMCAT_VERSION_MAJOR=9
+ARG TOMCAT_VERSION_FULL
+
 ## ajouter un dossier /opt/tomcat
 RUN mkdir /opt/tomcat
 
@@ -17,7 +20,7 @@ RUN mkdir /opt/tomcat
 # RUN rm -f /opt/tomcat/apache-tomcat-9.0.88.tar.gz
 ## installer java (yum)
 ## ajouter un utilisateur tomcat avec le dossier /opt/tomcat comme home
-RUN curl https://downloads.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.tar.gz \
+RUN curl https://downloads.apache.org/tomcat/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION_FULL}/bin/apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz \
     | tar -xzv -C /opt/tomcat/ --strip-components=1 && \
     yum update -q && yum install -y -q java-1.8.0-openjdk-headless && \ 
     yum clean all && rm -rf /var/cache/yum && \
