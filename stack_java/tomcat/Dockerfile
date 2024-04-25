@@ -13,18 +13,17 @@ RUN mkdir /opt/tomcat
 
 ## injecter le fichier https://downloads.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.tar.gz dans ce dossier
 # ADD https://downloads.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.tar.gz /opt/tomcat
-RUN curl -o /opt/tomcat/apache-tomcat-9.0.88.tar.gz https://downloads.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.tar.gz
 ## décomprésser dans ce dossier sans dossier intermédiaire 
-RUN tar -xzvf /opt/tomcat/apache-tomcat-9.0.88.tar.gz -C /opt/tomcat/ --strip-components=1
-RUN rm -f /opt/tomcat/apache-tomcat-9.0.88.tar.gz
+# RUN rm -f /opt/tomcat/apache-tomcat-9.0.88.tar.gz
 ## installer java (yum)
-RUN yum update -q && yum install -y -q java 
-## nettoyer les paquets yum
-RUN yum clean all && rm -rf /var/cache/yum
-
 ## ajouter un utilisateur tomcat avec le dossier /opt/tomcat comme home
-RUN useradd -M -d /opt/tomcat -U tomcat
-## changer le home de l'image vers /opt/tomcat/webapps
+RUN curl https://downloads.apache.org/tomcat/tomcat-9/v9.0.88/bin/apache-tomcat-9.0.88.tar.gz \
+    | tar -xzv -C /opt/tomcat/ --strip-components=1 && \
+    yum update -q && yum install -y -q java-1.8.0-openjdk-headless && \ 
+    yum clean all && rm -rf /var/cache/yum && \
+    useradd -M -d /opt/tomcat -U tomcat
+
+    ## changer le home de l'image vers /opt/tomcat/webapps
 WORKDIR /opt/tomcat/webapps
 ## télécharger l'application sample https://tomcat.apache.org/tomcat-10.1-doc/appdev/sample/sample.war dans le dossier home 
 ADD https://tomcat.apache.org/tomcat-10.1-doc/appdev/sample/sample.war .
@@ -37,6 +36,6 @@ VOLUME [ "/opt/tomcat/webapps" ]
 ## pour communiquer avec httpd avec le port 8080
 EXPOSE 8080
 ## exécuter de manière statique (sans substitution) le binaire en foreground catalina.sh vs startup.sh ???
-ENTRYPOINT [ "/opt/tomcat/bin/catalina.sh" ]
+# ENTRYPOINT [ "/opt/tomcat/bin/catalina.sh" ]
 ## ajouter la sous commande pour lancer en one shot run ou start ???
-CMD [ "run" ]
+CMD ["/opt/tomcat/bin/catalina.sh", "run" ]
