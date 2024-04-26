@@ -1,0 +1,55 @@
+---
+
+services:
+  # tomcat:
+  #   container_name: stack-java-tomcat
+  #   image: formation.lan:443/stack-java-tomcat:1.0
+  #   build:
+  #     # pas de cache pour vérifier que le Dockerfile est intègre
+  #     # no_cache: true
+  #     context: ./tomcat
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - TOMCAT_VERSION_MAJOR=${TOMCAT_VERSION_MAJOR:-9}
+  #       - TOMCAT_VERSION_FULL=${TOMCAT_VERSION_FULL:-9.0.88}
+  #   networks:
+  #     - stack_java
+  #   restart: unless-stopped
+  #   labels:
+  #     - author.username=mlamamra
+  #     - author.email=mlamamra@dawan.fr
+
+  
+  stack-java-httpd:
+    # WARNING: pas de BUILD avec SWARM !
+    image: stack-java-httpd:2.4
+    ports:
+      - 8081:80
+    # depends_on:
+    #   - tomcat
+    labels:
+      - author.username=mlamamra
+      - author.email=mlamamra@dawan.fr
+    # structure du service dans SWARM
+    deploy:
+      # la stratégie de découverte réseau pour trouver un ou plusieurs "tasks" du service
+      endpoint_mode: vip # trouver une task
+      # la stratégie de dissiménation des tasks  
+      mode: replicated # dissiminer un nb de replicas où on peut
+      replicas: 2
+      # stratégie de redémmarage mais du service (pas des tasks)
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 2
+      # gestion des rolling updates => mise à jour des conditions / critères de l'état des servies
+      update_config:
+        # nb de threads (parallélisme): on peut gérer les maj de chaque task  en //
+        parallelism: 2
+        
+
+networks:
+  stack_java:
+    name: stack_java
+    driver: overlay
+    

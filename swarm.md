@@ -23,7 +23,7 @@
 ## lancement d'un service sur le cluster
 
 * un service est l'abstraction de l'accès à un conteneur sans savoir sur quelle machine il se trouve
-* le conteneur peut mêmeêtre répliqué sur plusieurs noeuds du cluster
+* le conteneur peut même être répliqué sur plusieurs noeuds du cluster
 * pour 1 **service**, on peut avoir n conteneurs répliqués que l'on nomme **task**
 
 * exemple: 
@@ -32,7 +32,7 @@ docker service create \
   --name helloswarm \
   --replicas 2 \
   alpine:3.16 \
-  ping 8.8.8.8
+  sleep 1000
 ```
 
 * liste des services du cluster: `docker service ls`
@@ -41,7 +41,7 @@ docker service create \
 * utiliser également `docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer` pour visualiser graphiqument
 * les logs du service: `docker service logs [service_name]`
 * suppression du service: `docker service rm [service_name]`
-* attention: on ne stoppe ni démarre un sevrvice !!!
+> attention: on ne stoppe ni démarre un sevrvice !!!
 
 ### placement des tâches d'un service
 
