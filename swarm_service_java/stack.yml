@@ -22,7 +22,7 @@ services:
   
   httpd:
     # WARNING: pas de BUILD avec SWARM !
-    image: stack-java-httpd:2.4
+    image: formation.lan:443/stack-java-httpd:2.4
     ports:
       - 8081:80
     # 1. dans un dialecte YAML, on peut utiliser le polymorphisme
@@ -61,4 +61,7 @@ networks:
   stack_java:
     name: stack_java
     driver: overlay
+  registry:
+    external: true
+    
     

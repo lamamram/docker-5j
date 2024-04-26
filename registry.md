@@ -26,7 +26,7 @@
 
 ```
 {
-   "insecure-registries": ["formation.lan:5000"]
+   "insecure-registries": ["formation.lan:443"]
 }
 # sudo systemctl daemon-reload
 ```

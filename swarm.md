@@ -161,3 +161,20 @@ par ex.
     - les images doivent être disponibles dans tous les noeuds 
       => le build des images est la responsabilité du dockerd 
       => et donc le stockage des images
+  
+# AJOUT d'un registre docker
+
+1. ajouter un service 
+  * même que docker compose sans restart
+  * en ajoutant un réseau overlay au lieu un bridge
+  * en ajoutant la structure deploy: avec un placement:constraint: node.role==manager
+
+2. ajouter les "insecure-registries":"formation.lan:443" dans le /etc/docker/daemon.json
+   * `sudo systemctl restart docker`
+
+3. exécuter docker  login formation.lan:443 -u testuser -p password sur tous les noeuds
+   * la conx sur le manager est locale parce que formation.lan est 127.0.0.1 
+   => donc dockerd se dégrade sur http
+
+4. on peut demander l'image poussée formation.lan:443/<image>:<tag> dans la stack.yml
+5. `docker stack deploy --with-registry-auth --compose-file stack.yml stack_xxxx`
