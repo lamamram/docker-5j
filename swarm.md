@@ -50,8 +50,11 @@ par ex.
 2. contraintes custom utilisant les labels sur les nodes:
   * `docker node update --label-(add|rm) <label>=<value> <node_name>`
   * `docker service create ... --constraint node.labels.<label_name>(==|!=)<value> ...` 
-3. équilibrage selon des labels: => disposition la plus équilibrée selon les valeurs de certains labels
+3. équilibrage selon des labels: => disposition la plus équilibrée selon les valeurs d'un label
   * `docker service create ... --placement-pref spread=node.labels....`
+  * avec `docker node(i) update --label-add key=x, node(j) update --label-add key=y, ...`
+  * les nodes non taggés sont considéré avec la valeur null donc ils sont conernés dans la répartition
+  * l'algorithme n'est pas très sûr ...
 ### mise à jour d'un service : rolling update
 
 * mise à jour de tous les aspects d'un service

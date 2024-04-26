@@ -33,7 +33,6 @@ services:
         # on peut spécifier des aliases pour différencier le nom du service
         aliases:
           - stack-java-httpd
-          
 
     # depends_on:
     #   - tomcat
