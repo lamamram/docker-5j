@@ -11,6 +11,15 @@
    docker swarm join --token SWMTKN-1-[SEPCIFIC_TOKEN] [manager_ip]:2377
   ```
 
+3. pour ajouter un noeud plus tard, sur le manager,
+   * `docker swarm join-token worker` => qui redonne le token
+
+4. il est possible d'utiliser plusieurs noeuds de type manager
+   => pour augmenter les ressources swarm qui pilotent **le cycle de vie des services**
+   * dans le manager : `docker node promote worker[i]`
+   * REM: un "mini-cluster" Manager élit régulièrement un Leader Prime pour initier les servies du Manager
+   => étant qu'on a un élection il nous faut un nb **impair** de leaders pour faciliter le
+   résulat
 ## lancement d'un service sur le cluster
 
 * un service est l'abstraction de l'accès à un conteneur sans savoir sur quelle machine il se trouve
