@@ -78,6 +78,7 @@ par ex.
   - le service garde l'historique des conteneur de la version précédente en cas de rollback
   - visualiser l'historique d'un noeud : `docker node ps`
   - visualiser l'historique de toutes les tâches : `docker service ps`
+  - connecter / déconnecter sur des réseaux (a priori on est sur le réseau ingress de type overlay): **--network-(add|rm)** 
   - fixer la profondeur de l'historique défaut 5: `docker swarm update --task-history-limit n`
 
   * mises à jour secondaires

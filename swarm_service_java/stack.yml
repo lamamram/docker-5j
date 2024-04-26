@@ -20,11 +20,21 @@ services:
   #     - author.email=mlamamra@dawan.fr
 
   
-  stack-java-httpd:
+  httpd:
     # WARNING: pas de BUILD avec SWARM !
     image: stack-java-httpd:2.4
     ports:
       - 8081:80
+    # 1. dans un dialecte YAML, on peut utiliser le polymorphisme
+    # => le type de la valeur d'une clé peut être variable
+    # ici networks peut être une liste ou un objet contenant des configs plus complexes
+    networks: 
+      stack_java:
+        # on peut spécifier des aliases pour différencier le nom du service
+        aliases:
+          - stack-java-httpd
+          
+
     # depends_on:
     #   - tomcat
     labels:
