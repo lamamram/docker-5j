@@ -152,3 +152,8 @@ par ex.
   
   * relancer un conf
     - `docker stack rm [stack_name] && docker deploy ...
+  
+  * CAVEATS:
+    - les images doivent être disponibles dans tous les noeuds 
+      => le build des images est la responsabilité du dockerd 
+      => et donc le stockage des images
