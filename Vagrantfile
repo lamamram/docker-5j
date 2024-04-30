@@ -8,7 +8,7 @@
 # access-token: myusine xYph6TpAt1yJ1hJiS3QN
 Vagrant.configure(2) do |config|
   # interface réseau à utiliser (ipconfig /all)
-  interface = "Intel(R) Ethernet Connection (7) I219-LM #2"
+  interface = "Intel(R) Ethernet Connection (7) I219-V"
   # gamme d'ip à utiliser
   range = "192.168.1.3"
   # masque de sous réseau
