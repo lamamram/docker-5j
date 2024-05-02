@@ -169,7 +169,8 @@ par ex.
   * en ajoutant un réseau overlay au lieu un bridge
   * en ajoutant la structure deploy: avec un placement:constraint: node.role==manager
 
-2. ajouter les "insecure-registries":"formation.lan:443" dans le /etc/docker/daemon.json
+2. ajouter la clé `"insecure-registries": ["formation.lan:443"]` dans l'objet json **/etc/docker/daemon.json**
+   * pour chaque noeud et
    * `sudo systemctl restart docker`
 
 3. exécuter docker  login formation.lan:443 -u testuser -p password sur tous les noeuds

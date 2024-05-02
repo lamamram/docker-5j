@@ -14,16 +14,19 @@ services:
     networks:
       registry:
         aliases:
-          - registry.formation.lan
+          - formation.lan
     volumes:
       - ./certs:/certs:ro
       - ./auth:/auth:ro
+      - registry:/var/lib/registry
     deploy:
       endpoint_mode: vip
       mode: replicated # 1 replica unique dans chaque noeud
       placement:
         constraints:
+          # logique AND sur plusieurs contraintes
           - node.role == manager
+          - node.platform.os == linux
       replicas: 1
       restart_policy:
         condition: on-failure
@@ -34,3 +37,7 @@ networks:
   registry:
     name: registry
     driver: overlay
+
+volumes:
+  registry:
+    name: registry
