@@ -179,3 +179,21 @@ par ex.
 
 4. on peut demander l'image poussée formation.lan:443/<image>:<tag> dans la stack.yml
 5. `docker stack deploy --with-registry-auth --compose-file stack.yml stack_xxxx`
+
+# AJOUT d'un reverse proxy traefik (version http)
+
+1. ordre de création des services
+   - registry
+   - traefik
+   - java
+
+2. configuration traefik (cf stack) 
+   - public network
+   - labels
+   - command
+
+3. configuration dynamique sur httpd
+   - ajout au réseau public
+   - labels dans la section deploy, PAS conteneur
+   - on a plus besoin de publication sur httpd car traefik est le point d'entrée
+   - la règle générale pour trouver le service java est formation.lan  
